@@ -1,9 +1,10 @@
 //function to set about
 var base_url = "https://icircles.app/";
 let username = "";
+let authorImgUrl ="";
 aboutRender = (about) => {
   username = about.username;//for globally access
-
+  authorImgUrl = base_url+about.image;
   //user tab name
   username = about.username;
   document.getElementById("tabName").innerHTML = `iCircles - Profile -  ${about.username}`;
@@ -121,38 +122,56 @@ verifiedCardRender = (microsites_verified_card) => {
   document.getElementById("verifiedCard").innerHTML = htmlText;
 };
 
-//function to set profile photos
-myphotosRender = (profile_images) => {
-  let htmlText = "";
-  profile_images.map((profilePhoto)=>{
-      htmlText += `
-       <div class="col-md-4 mb-5 animate-box aboutMeImage" data-animate-effect="fadeInTop">
-          <img src="https://icircles.app/uploads/user/${username}/${profilePhoto.image}" style='height: 100%; width: 100%; object-fit: contain'>
-       </div>
-      `
-  });
-  document.getElementById("aboutPhotos").innerHTML = htmlText;
-  //alert(document.getElementById("myPhotos"));
-};
-
 //function to set portfolio video
 profileVideoRender = (portfolioVideo) =>{
+  let profileVideoLength = portfolioVideo.length;
+  if(profileVideoLength<=0){
+    document.getElementById("profileVideoSection").style.display = 'none';
+    document.getElementById("profilePhotoSection").style.marginTop = '30px';
+  }
   let htmlText = "";
   portfolioVideo.map((videoData)=>{
       htmlText += `
-  
-      <div class="banner_thumb ">
-				<div class="home_img wow slideInRight" data-wow-duration="1.5s" data-wow-delay=".1s">
-							<img src=${authorImgUrl} alt=""  style='height: 100%; width: 100%; object-fit: contain'>
-				</div>
-				<div class="play">
-          <a class="venobox" data-autoplay="true" data-vbtype="video" href="https://icircles.app/uploads/video/${videoData.video}"> <i class="fas fa-play-circle"></i></a>
-				</div>
-			</div>
+      <div class="vedio_wrap">
+        <img src=${authorImgUrl} alt="">
+        <div class="Overly">
+          <div class="photoAdd">
+           <a target="_blank" href="https://icircles.app/uploads/video/${videoData.video}"><i class="fa-solid fa-circle-play"></i></a>
+          </div>
+        </div>
+      </div>
       `;
   });
   document.getElementById("profileVideo").innerHTML = htmlText;
 };
+
+//function to set profile photos
+myphotosRender = (profile_images) => {
+  let profileImagesLength = profile_images.length;
+  if(profileImagesLength<=0){
+    document.getElementById("profilePhotoSection").style.display = 'none';
+    document.getElementById('experienceSection').style.marginTop = '30px';
+  }
+
+  let htmlText = "";
+  profile_images.map((profilePhoto)=>{
+      htmlText += `
+      <div class="col-6 col-lg-4">
+            <div class="gallery_wrap">
+                <img src="https://icircles.app/uploads/user/${username}/${profilePhoto.image}" alt="">
+                <div class="Overly">
+                    <div class="photoAdd">
+                      <a href="#"><i class="fa-solid fa-eye"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+      `
+  });
+  document.getElementById("galleryPhotos").innerHTML = htmlText;
+};
+
+
 //function to set work experiences
 workExperienceRender = (experiences) => {
   var length = experiences.length;
@@ -495,8 +514,8 @@ referenceRender = (references) => {
 render = (data) => {
   aboutRender(data.about);
   verifiedCardRender(data.microsites_verified_card);
-//   myphotosRender(data.profile_images);
-//   profileVideoRender(data.profile_video);
+  profileVideoRender(data.profile_video);
+  myphotosRender(data.profile_images);
 //   workExperienceRender(data.experiences);
 //   skillRender(data.subskills);
 //   educationsRender(data.educations);
