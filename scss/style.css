@@ -284,12 +284,6 @@ p {
   padding-top: 120px;
 }
 
-.profileInfoQualityImg{
-  margin-left: 5px;
-  height: 25px;
-  width: 25px;
-}
-
 .header .field .profileInfo h4 {
   font-size: 24px;
   color: black;
@@ -577,18 +571,6 @@ p {
 .header .iconLink ul li a .ig {
   border: 1px solid #ea8529;
   color: #ea8529;
-}
-.header .iconLink ul li a .gh {
-  border: 1px solid #0f0a05;
-  color: #0f0a05;
-}
-.header .iconLink ul li a .wapp {
-  border: 1px solid green;
-  color: green;
-}
-.header .iconLink ul li a .sk {
-  border: 1px solid #0097d3;
-  color: #0097d3;
 }
 
 .vedio {
