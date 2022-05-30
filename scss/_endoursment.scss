@@ -1,0 +1,76 @@
+.endurosmnet{
+    padding-bottom: 100px;
+ .sectionHeader{
+     display: flex;
+     justify-content: space-between;
+     h4{
+         font-size: 28px;
+         color: $black;
+         font-weight: 600;
+         padding-bottom: 20px;
+     }
+     .sectionItem{
+          ul{
+              li{
+                  display: inline-block;
+                  font-size: 20px;
+                  padding-left: 20px;
+                  color: $black;
+                  &:hover{
+                      color: $primaryColor;
+                  }
+              }
+          }
+     }
+ }
+ .endurosmnet_wrapper{
+     .endurosmnetImg{
+         height: 600px;
+         width: 100%;
+         margin-top: 30px;
+         img{
+             max-height: 100%;
+             width: 100%;
+             border-radius: 10px;
+             border: 1px solid $border;
+         }
+     }
+     .endurosmnetText{
+         display: flex;
+         justify-content: space-between;
+         padding-top: 30px;
+
+         .textLeft{
+             h4{
+                 font-size: 24px;
+                 color: $black;
+                 font-weight: 600;  
+             }
+             h5{
+                 font-size: 17px;
+                 color: $black;
+                 font-weight: 500;  
+             }
+             h6{
+                 font-size: 16px;
+                 color: $primaryColor;
+                 font-weight: 500;  
+             }
+         }
+         .textRight{
+             h4{
+                 font-size: 17px;
+                 color: $text;
+                 font-weight: 400;  
+             }
+         }
+     }
+     p{
+         font-size: 15px;
+         color: $text;
+         font-weight: 400;
+         line-height: 26px;
+         padding-top: 10px;
+     }
+ }
+}

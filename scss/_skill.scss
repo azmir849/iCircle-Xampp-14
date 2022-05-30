@@ -1,0 +1,52 @@
+.skill{
+    padding-bottom: 100px;
+    .sectionHeader{
+        display: flex;
+        justify-content: space-between;
+        h4{
+            font-size: 28px;
+            color: $black;
+            font-weight: 600;
+            padding-bottom: 20px;
+        }
+        .sectionItem{
+             ul{
+                 li{
+                     display: inline-block;
+                     font-size: 20px;
+                     padding-left: 20px;
+                     color: $black;
+                     &:hover{
+                         color: $primaryColor;
+                     }
+                 }
+             }
+        }
+    }
+    .skill_wrapper{
+        padding-top: 20px;
+        .skill_wrap{
+             border-bottom: 1px solid $border;
+             padding: 15px 0;
+             margin-top: 10px;
+             .skill_text{
+                h5{
+                    font-size: 22px;
+                    color: $primaryColor;
+                    font-weight: 500;
+                    line-height: 28px;
+
+                }
+                p{
+                    font-size: 15px;
+                    color: $text;
+                    font-weight: 400;
+                    line-height: 29px;
+                }
+             }
+        }
+        .border_n{
+            border-bottom: 1px solid transparent; 
+        }
+    }
+}

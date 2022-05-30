@@ -1,0 +1,72 @@
+.interest{
+    padding-bottom: 100px;
+    .sectionHeader{
+        display: flex;
+        justify-content: space-between;
+        h4{
+            font-size: 28px;
+            color: $black;
+            font-weight: 600;
+            padding-bottom: 20px;
+        }
+        .sectionItem{
+             ul{
+                 li{
+                     display: inline-block;
+                     font-size: 20px;
+                     padding-left: 20px;
+                     color: $black;
+                     &:hover{
+                         color: $primaryColor;
+                     }
+                 }
+             }
+        }
+    }
+    .interests_wrapper{
+        padding-top: 20px;
+        .nav{
+         .nav-item{
+             padding-right: 20px;
+             .nav-link {
+                   font-size: 18px;
+                   color: $black;
+                   font-weight: 500;
+                   background-color: transparent;
+                   border: 1px solid $border;
+             }
+             .active{
+                 background-color: $primaryColor;
+                 color: $white;
+             }
+          }
+        }
+.tab-content{
+    border: 1px solid $border;
+    padding: 10px 15px 30px 15px;
+    border-radius: 5px;
+    .tab-pane{
+       .interests_details{
+           padding-top: 20px;
+           p{
+            font-size: 15px;
+            color: $text;
+            font-weight: 400;
+              }
+            }
+            .interestsItem{
+                height: 250px;
+                width: 100%;
+                box-shadow: 1px 1.2px 4px 1px #9a99994d;
+                margin-top: 20px;
+                border-radius: 8px;
+                img{
+                    width: 100%;
+                    max-height: 100%;
+                    border-radius: 8px;
+                }
+            }
+          }
+        }
+    }
+}
