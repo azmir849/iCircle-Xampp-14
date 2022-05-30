@@ -175,8 +175,9 @@ myphotosRender = (profile_images) => {
 //function to set work experiences
 workExperienceRender = (experiences) => {
   var length = experiences.length;
-  if(length===0){
-    document.getElementById("experienceDiv").style.display= "none";
+  if(length<=0){
+    document.getElementById("experienceSection").style.display= "none";
+    document.getElementById('skillSection').style.marginTop = '30px';
   }
 
   let htmlText = "";
@@ -185,17 +186,18 @@ workExperienceRender = (experiences) => {
     const thatYear = new Date(expData.from_date);
     let year = thatYear.getFullYear();
       htmlText += `
-      <div class="row experience  mt-5">
-					<div class="col-md-4 text-right experienceLeftCol">
-							<h3>${expData.company_name}</h3>
-							<h3 class="mt-4">${year}</h3>
-					</div>
-					<div class="col-md-8">
-							<h3><span><img src="./images/Tube.png" width="3%" height="3%"></span> <span style="color: #1c9d5d;font-weight: bold;">${expData.job_title}</span></h3>
-							<h3 class="ml-5">${expData.details}</h3>
-				  </div>
-			 </div>
-
+      <div class="col-lg-12">
+          <div class="experiance_wrap">
+                <div class="experiance_img">
+                    <img src="https://icircles.app/uploads/user/${username}/${expData.image}" alt="">
+                </div>
+                <div class="experiance_text">
+                    <h4>${expData.company_name} ${year}</h4>
+                    <h5>${expData.job_title}</h5>
+                    <p>${expData.details}</p>
+                </div>
+          </div>
+      </div>
       `;
    
   });
@@ -205,66 +207,33 @@ workExperienceRender = (experiences) => {
 //function to set Skills
 skillRender = (skills) => {
   var length = skills.length;
-  if(length===0){
-    document.getElementById("skillsDiv").style.display= "none";
+  if(length<=0){
+    document.getElementById("skillSection").style.display= "none";
+    document.getElementById('educationSection').style.marginTop = '30px';
   }
 
   let htmlText = "";
   skills.map((skills) => {
-    if (skills.skill_level == "Advanced") {
-      htmlText += `
-      <div class="col-md-6 animate-box mb-5" data-animate-effect="fadeInLeft">
-				<div class="progress-wrap">
-					<h3>${skills.name}</h3>
-					<div class="progress">
-						<div class="progress-bar color-1" role="progressbar" aria-valuenow="90"
-							aria-valuemin="0" aria-valuemax="100" style="width:90%">
-							<span>90%</span>
-						</div>
-					</div>
-				</div>
-			</div>
-            `;
-    }
-    if (skills.skill_level == "Intermediate") {
-      htmlText += `
-      <div class="col-md-6 animate-box mb-5" data-animate-effect="fadeInLeft">
-      <div class="progress-wrap">
-      <h3>${skills.name}</h3>
-        <div class="progress">
-          <div class="progress-bar color-1" role="progressbar" aria-valuenow="60"
-            aria-valuemin="0" aria-valuemax="100" style="width:60%">
-            <span>60%</span>
-          </div>
-        </div>
-      </div>
+    htmlText +=`
+    <div class="col-lg-12">
+    <div class="skill_wrap">
+         <div class="skill_text">
+             <h5>${skills.name}</h5>
+             <p>Lorem ipsum is a pseudo-Latin text used in web design, typography, layout, and printing in place of English to emphasise design elements over content. It's alsoLorem ipsum is a pseudo-Latin text used in web design, typography, layout, and printing in place of English to emphasise design elements over content. It's also ... ...</p>
+         </div>
     </div>
-            `;
-    }
-    if (skills.skill_level == "Beginner") {
-      htmlText += `
-      <div class="col-md-6 animate-box mb-5" data-animate-effect="fadeInLeft">
-      <div class="progress-wrap">
-      <h3>${skills.name}</h3>
-        <div class="progress">
-          <div class="progress-bar color-1" role="progressbar" aria-valuenow="30"
-            aria-valuemin="0" aria-valuemax="100" style="width:30%">
-            <span>30%</span>
-          </div>
-        </div>
-      </div>
-    </div>
-            `;
-    }
+</div>
+    `;
   });
-  document.getElementById("skillBar").innerHTML = htmlText;
+  document.getElementById("skills").innerHTML = htmlText;
 };
 
 // function to set user educations information
 educationsRender = (educations) => {
   var length = educations.length;
-  if(length===0){
-    document.getElementById("educationDiv").style.display= "none";
+  if(length<=0){
+    document.getElementById("educationSection").style.display= "none";
+    document.getElementById('serviceSection').style.marginTop = '30px';
   }
 
   let htmlText = "";
@@ -273,14 +242,21 @@ educationsRender = (educations) => {
     const thatYear = new Date(eduData.from_date);
     let year = thatYear.getFullYear();
       htmlText += `
-      <div class="col-md-3 p-3 m-5 animate-box educationCard text-center" data-animate-effect="fadeInLeft">
-        <img src="./images/educationIcon.png">
-        <h3 class="mt-3">${eduData.degree_name}</h3>
-        <button>${year}</button>
-    </div>
+
+        <div class="col-lg-12">
+            <div class="education_wrap">
+                  <div class="education_img">
+                  <img src="https://icircles.app/uploads/user/${username}/${eduData.image}" alt="">
+                  </div>
+                  <div class="education_text">
+                      <h5>${eduData.degree_name} ${year}</h5>
+                      <p>Lorem ipsum is a pseudo-Latin text used in web design, typography, layout, and printing in place of English to emphasise design elements over content. It's alsoLorem ipsum is a pseudo-Latin text used in web design, typography, layout, and printing in place of English to emphasise design elements over content. It's also ... ...</p>
+                  </div>
+            </div>
+        </div>
       `;
   });
-  document.getElementById("educationSectionData").innerHTML = htmlText;
+  document.getElementById("educationsData").innerHTML = htmlText;
 };
 
 //function to set services
@@ -516,9 +492,9 @@ render = (data) => {
   verifiedCardRender(data.microsites_verified_card);
   profileVideoRender(data.profile_video);
   myphotosRender(data.profile_images);
-//   workExperienceRender(data.experiences);
-//   skillRender(data.subskills);
-//   educationsRender(data.educations);
+  workExperienceRender(data.experiences);
+  skillRender(data.subskills);
+  educationsRender(data.educations);
 //   serviceRender(data.services);
 //   languageRender(data.languages);
 //   portfolioRender(data.portfolios);
