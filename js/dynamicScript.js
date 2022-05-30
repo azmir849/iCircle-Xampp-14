@@ -37,7 +37,6 @@ aboutRender = (about) => {
   let htmlText = "";
   const strShort = about.about_me;
   const strlong = about.about_me;
-  console.log(strShort.length);
   // 👇️ First 25 words
   const shortDescription = strShort.split(" ").slice(0, 32).join(" ");
   const longDescription = strlong.split(" ").slice(32, 400).join(" ");
@@ -262,28 +261,28 @@ educationsRender = (educations) => {
 //function to set services
 serviceRender = (services) => {
   var length = services.length;
-  if(length===0){
-    document.getElementById("servicesDiv").style.display= "none";
+  if(length<=0){
+    document.getElementById("serviceSection").style.display= "none";
+    document.getElementById('languageSection').style.marginTop = '30px';
   }
 
   let htmlText = "";
   services.map((serviceData) => {
     const str = serviceData.details;
     // 👇️ First 25 words
-    const shortDescription = str.split(" ").slice(0, 25).join(" ");
-
+    const shortDescription = str.split(" ").slice(0, 10).join(" ");
     htmlText += ` 
-    <div  class="col-md-4 animate-box">
-    <a class="card1" href="#">
-      <h3 class="mt-5 font-weight-bold">${serviceData.service_name}</h3>
-      <p class="small cardShortDes">${shortDescription}  ...</p>
-      <div class="go-corner" href="#">
-        <div class="go-arrow">
-        <i class="${serviceData.fa_class}"></i>
+    <div class="col-md-6 col-lg-4">
+      <div class="service_wrap">
+        <div class="serviceImg">
+            <img src="${base_url}/${serviceData.thumb}" alt="">
         </div>
+        <div class="servicetext">
+            <h4>${serviceData.service_name}</h4>
+            <p>${shortDescription}  ...</p>
+          </div>
       </div>
-      </a>
-  </div>
+    </div>
     `;
   });
   document.getElementById("servicesData").innerHTML = htmlText;
@@ -293,53 +292,91 @@ serviceRender = (services) => {
 languageRender = (languages) => {
   var length = languages.length;
   if(length===0){
-    document.getElementById("languageDiv").style.display= "none";
+    document.getElementById("languageSection").style.display= "none";
+    document.getElementById('portfolioSection').style.marginTop = '30px';
   }
 
 
   let htmlText = "";
   languages.map((languages) => {
     htmlText += `
-    <div class="col p-0 mt-5 languageTriangle animate-box">
-		  <h2>${languages.title}</h2>
-		  <img src="./images/triangle.png" alt="" style="width:200px;">
-		  <div class="centered">${languages.level}</div>
-		</div>  
+
+    <div class="col-4 col-lg-2">
+      <div class="language_wrap">
+          <div class="language_text">
+              <h4>${languages.title}</h4>
+              <h5>${languages.level}</h5>
+          </div>
+      </div>
+    </div>
+
     `;
   });
-  document.getElementById("languageSectionData").innerHTML = htmlText;
+  document.getElementById("languages").innerHTML = htmlText;
 };
 
 //function to set portfolio
 portfolioRender = (portfolios) => {
-  var length = portfolios.length;
-  if(length===0){
-    document.getElementById("portfolioDiv").style.display= "none";
-  }
+  // console.log(portfolios);
+  let keys = [];
+  keys = Object.keys(portfolios);
+ 
+  // console.log(keys);
+  
 
-  let htmlText = "";
-  const keys = Object.keys(portfolios);
+  let cat = ``;
+  let contentIndex0 = ``;
+  let elementsImage= ``;
   keys.map((key, index) => {
+    const strShort = key;
+    const shorKey = strShort.split(" ").slice(0, 1).join(" ");
+    console.log("key"+shorKey);
+    // console.log("index"+index);
+    if(index===0){
+      cat += `<li class="nav-item" role="presentation">
+      <button class="nav-link active" id="${shorKey}-tab" data-bs-toggle="pill" data-bs-target="#${shorKey}" type="button" role="tab" aria-controls="pills-${shorKey}" aria-selected="true">${key}</button>
+    </li>`;
+    }else{
+      cat += `<li class="nav-item" role="presentation">
+      <button class="nav-link" id="${shorKey}-tab" data-bs-toggle="pill" data-bs-target="#${shorKey}" type="button" role="tab" aria-controls="pills-${shorKey}" aria-selected="true">${key}</button>
+    </li>`;
+    }
     portfolios[key].map((item, index) => {
-    htmlText +=`
-    <div class="col-md-4 col-sm-6 animate-box" data-animate-effect="fadeInLeft">
-    <div class="portfolio-entry">
-      <a href="" class="portfolio-img"><img src="${base_url + "/" + item.image}" height="90%" width="90%"
-          class="img-responsive" alt=""></a>
-    </div>
-  </div>
-    `;
-  })
+        console.log(item);
+        console.log(index);
+
+        if(index===0){
+          contentIndex0 += `
+          <div class="tab-pane fade show active" id="${shorKey}" role="tabpanel" aria-labelledby="${shorKey}-tab">
+              <div id="elementsImage" class="row">
+         
+              </div>
+          </div>
+          `;
+        }
+        elementsImage +=`
+        <div class="col-6 col-lg-3">
+          <div class="portItem">
+            <img src="images/s1.jpg" alt="">
+           </div>
+      </div>
+        
+        `;
+    });
+
 });
 
-  document.getElementById("portfolioData").innerHTML = htmlText;
+document.getElementById("pills-tab").innerHTML = cat;
+document.getElementById("pills-tabContent").innerHTML = contentIndex0;
+document.getElementById("elementsImage").innerHTML = elementsImage;
 };
 
 //function to set awards
 awardRender = (awards) => {
   var length = awards.length;
-  if(length===0){
-    document.getElementById("awardDiv").style.display= "none";
+  if(length<=0){
+    document.getElementById("awardSection").style.display= "none";
+    document.getElementById('interestSection').style.marginTop = '30px';
   }
 
   let htmlText = "";
@@ -348,17 +385,18 @@ awardRender = (awards) => {
     let year = thatYear.getFullYear();
     const str = awardData.details;
     // 👇️ First 25 words
-    const shortDescription = str.split(" ").slice(0, 25).join(" ");
+    const shortDescription = str.split(" ").slice(0, 50).join(" ");
     htmlText += `
-    <div class="col-md-5 col-sm-12 m-5 animate-box" data-animate-effect="fadeInLeft">
-				<div class="card awardsCard">
-					<div class="card-body">
-						<img src="images/award.png" height="10%" width="10%"class="img-responsive" alt="">
-						<h2 class="card-title ml-5 mt-4">${awardData.title} - ${year}</h2>
-						<p class="card-text ml-5">${shortDescription} ...</p>
-					</div>
-					</div>
-			</div>  
+
+    <div class="col-lg-12">
+    <div class="award_wrap">
+         <div class="award_text">
+             <h5>${awardData.title}</h5>
+             <h6>${year}</h6>
+             <p>${shortDescription} ...</p>
+         </div>
+    </div>
+</div>
     `;
   });
   document.getElementById("awardSectionData").innerHTML = htmlText;
@@ -388,78 +426,80 @@ interestRender = (interest) => {
 //function to set clients
 clientRender = (clients) => {
   var length = clients.length;
-  if(length===0){
-    document.getElementById("clientDiv").style.display= "none";
+  if(length<=0){
+    document.getElementById("clientSection").style.display= "none";
   }
 
   let htmlText = "";
   clients.map((clientData)=>{
      if(clientData.image==null){
       htmlText += `
-      <div class="col-md-3 col3replace col-sm-6 animate-box mt-3 mb-5" data-animate-effect="fadeInLeft">
-       <div class="clientCardElements text-center">
-          <h2 class="mt-3">${clientData.client_name}</h2>
-        </div>
+      <div class="col-lg-12">
+      <div class="clients_wrap">
+            <div class="clients_text">
+                <h4>Samsung IT Group 2021</h4>
+                <p>${clientData.client_name}</p>
+            </div>
       </div>
+  </div>
       `
      }else if(clientData.image!=null ){
       htmlText += `
-      <div class="col-md-3 col3replace col-sm-6 animate-box mt-3 mb-5" data-animate-effect="fadeInLeft">
-       <div class="clientCardElements text-center">
-          <img src="https://icircles.app/uploads/user/${username}/${clientData.image}" height="135px" width="135px" class="" alt="">
-          <h2 class="mt-3">${clientData.client_name}</h2>
-        </div>
+
+      <div class="col-lg-12">
+          <div class="clients_wrap">
+                <div class="clients_img">
+                    <img src="https://icircles.app/uploads/user/${username}/${clientData.image}" alt="">
+                </div>
+                <div class="clients_text">
+                    <h4>Samsung IT Group 2021</h4>
+                    <p>${clientData.client_name}</p>
+                </div>
+          </div>
       </div>
       `
      }
   });
-  document.getElementById("clientSectionData").innerHTML = htmlText;
+  document.getElementById("clientsData").innerHTML = htmlText;
 };
 
 //function to set blogs or journal
 blogRender = (blogs) => {
-  var length = blogs.length;
-  if(length===0){
-    document.getElementById("blogDiv").style.display= "none";
-  }
 
   let htmlText = "";
-  const keys = Object.keys(blogs);
-  keys.map((key) => {
-    blogs[key].map((item) => {
-      const thatYear = new Date(item.created_date);
+
+      const thatYear = new Date(blogs.created_date);
       let year = thatYear.getFullYear();
       let day = thatYear.toLocaleString("en-US", { "weekday": "long" }); // Monday
       let month = thatYear.toLocaleString('en-us', { month: 'long' }); /* June */
       let date = thatYear.getDate() /* 9 */
 
 
-      const str = item.description;
+      const str = blogs.description;
       // 👇️ First 25 words
       const shortDescription = str.split(" ").slice(0, 45).join(" ");
       const longtDescription = str.split(" ").slice(46, 120).join(" ");
       htmlText += `
-      <div  class="row mb-5 list-element">
-           <div class="col-md-1"></div>
-							<div class="col-md-10 journalCard">
-								<div class="row">
-									<div class="col-md-4">
-										<img class="blogImgInText" src=${base_url + "/" + item.image} style="border-radius: 5px;" height="100%" width="100%" class="" alt="">
-									</div>
-									<div class="col-md-8 journalRightText">
-										<h2>${item.title}</h2>
-										<p class="jounalDate">${day},${month} ${date},${year}</p>
-										<p class="blogText">${shortDescription}</p>
-									</div>
-								</div>
-								<p class="journalBodyText">${longtDescription}</p>
-							</div>
-							<div class="col-md-1"></div>
+      <div class="col-lg-1"></div>
+      <div class="col-lg-10">
+        <div class="journalImg">
+            <img src=${base_url+"/"+blogs.image} alt="">
         </div>
+      </div>
+      <div class="col-lg-1"></div>
+ 
+    <div class="jurnalText">
+     <div class="textLeft">
+        <h4>${blogs.title}</h4>
+        <h5>${blogs.cat_name}</h5>
+     </div>
+     <div class="textRight">
+        <h4>${day}, ${month} ${date}, ${year}</h4>
+     </div>
+  </div>
+  <p>${blogs.description}</p>
       `;
-    });
-  });
-  document.getElementById("journalSectionData").innerHTML = htmlText;
+  document.getElementById("blogs").innerHTML = htmlText;
   
 };
 
@@ -467,19 +507,23 @@ blogRender = (blogs) => {
 referenceRender = (references) => {
   var length = references.length;
   if(length===0){
-    document.getElementById("referenceDiv").style.display= "none";
+    document.getElementById("referenceSection").style.display= "none";
   }
 
   let htmlText = "";
   references.map((referenceData)=>{
       htmlText += `
-      <div class="col-md-3 col3replace col-sm-6 animate-box mt-3 mb-5" data-animate-effect="fadeInLeft">
-				<div class="clientCardElements text-center">
-					<img src="images/client1.png" height="135px" width="135px" class="" alt="">
-					<h2 class="mt-3">${referenceData.name}</h2>
-					<p class="">${referenceData.email}</p>
-				</div>
-			</div>
+      <div class="col-lg-12">
+      <div class="reffernce_wrap">
+           <div class="reffernce_img">
+              <img src="images/profileMAn.png" alt="">
+           </div>
+           <div class="reffernce_text">
+               <h4>${referenceData.name}</h4>
+               <h5>${referenceData.email}</h5>
+           </div>
+      </div>
+  </div>
       `;
      });
   document.getElementById("referencesData").innerHTML = htmlText;
@@ -495,14 +539,14 @@ render = (data) => {
   workExperienceRender(data.experiences);
   skillRender(data.subskills);
   educationsRender(data.educations);
-//   serviceRender(data.services);
-//   languageRender(data.languages);
-//   portfolioRender(data.portfolios);
-//   awardRender(data.awards);
+  serviceRender(data.services);
+  languageRender(data.languages);
+  portfolioRender(data.portfolios);
+  awardRender(data.awards);
 //   interestRender(data.interests);
-//   clientRender(data.clients);
-//   blogRender(data.blogs);
-//   referenceRender(data.references);
+  clientRender(data.clients);
+ blogRender(data.blogs);
+ referenceRender(data.references);
 };
 
 
@@ -516,124 +560,5 @@ fetch("https://icircles.app/api/profile/usermicrosite/"+usrnm[usrnm.length-1])
     render(data);
   });
 
-//Get dynamic aside ul list
-fetch("https://icircles.app/api/profile/usermicrosite/"+usrnm[usrnm.length-1])
-  .then((responsse) => responsse.json())
-  .then((data) => { 
-  
-    //Get all the field length
-    const experienceLength = data.experiences.length;
-    const subskillsLength = data.subskills.length;
-    console.log(subskillsLength);
-    const servicesLength = data.services.length;
-    const educationsLength = data.educations.length;
-    const languagesLength = data.languages.length;
-    const referencesLength = data.references.length;
-    const clientsLength = data.clients.length;
-    const interestsLength = data.interests.length;
-    const awardsLength = data.awards.length;
-    const portfoliosLength = Object.keys(data.portfolios).length;
-    const blogsLength = Object.keys(data.blogs).length;
-    const testimonialsLength = data.testimonials.length;
 
-    let asideUl = ``;
-    if (data.user_id) {
-      asideUl += `
-      <li><a href="#johnDoe-hero" data-nav-section="home">Home</a></li>
-        `;
-    }
-    if (data.user_id) {
-      asideUl += `
-      <li><a href="#aboutDiv" data-nav-section="about">About</a></li>
-        `;
-    }
-    if (experienceLength>=1) {
-      asideUl += `
-      <li><a href="#experienceDiv" data-nav-section="experience">Experience</a></li>
-        `;
-    }
-    if (subskillsLength>=1) {
-      asideUl += `
-      <li><a href="#skillsDiv" data-nav-section="skills">Skills</a></li>
-        `;
-    }
-    if (educationsLength>=1) {
-      asideUl += `
-      <li><a href="#educationDiv" data-nav-section="education">Education</a></li>
-        `;
-    }
-    if (servicesLength>=1) {
-      asideUl += `
-    	<li><a href="#servicesDiv" data-nav-section="service">Services</a></li>
-        `;
-    }
-    if (languagesLength>=1) {
-      asideUl += `
-      <li><a href="#languageDiv" data-nav-section="language">Languages</a></li>
-        `;
-    }
-    if (portfoliosLength>=1) {
-      asideUl += `
-      <li><a href="#portfolioDiv" data-nav-section="portfolio">Portfolio</a></li>
-        `;
-    }
-    if (awardsLength>=1) {
-      asideUl += `
-      <li><a href="#awardDiv" data-nav-section="awards">Awards</a></li>
-        `;
-    }
-    if (interestsLength>=1) {
-      asideUl += `
-      <li><a href="#interestDiv" data-nav-section="interests">Interests</a></li>
-        `;
-    }
-    if (clientsLength>=1) {
-      asideUl += `
-      <li><a href="#clientDiv" data-nav-section="clients">Clients</a></li>
-        `;
-    }
-    if (blogsLength>=1) {
-      asideUl += `
-      <li><a href="#blogDiv" data-nav-section="journal">Journal</a></li>
-        `;
-    }
-    if (referencesLength>=1) {
-      asideUl += `
-      <li><a href="#referenceDiv" data-nav-section="reference">References</a></li>
-        `;
-    }
-    if (data.user_id) {
-      asideUl += `
-      <li><a href="#appointmentDiv" data-nav-section="appoinment">Appointment</a></li>
-        `;
-    }
-    if (data.user_id) {
-      asideUl += `
-      <li id="lastlI"><a href="#contactDiv" data-nav-section="contact">Contact</a></li>
-        `;
-    }
-
-
-    document.getElementById("").innerHTML = asideUl;
-
-//For testing
-  //   const keys = Object.keys(data);
-  //   console.log(keys);
-  //   console.log("field name" +keys[1]);
-  //   var length = data.microsites.length;
-  //   var length2 = data.experiences.length;
-  //   console.log("fileld length "+length);
-  //   console.log("experiences fileld length "+length2);
-
-  // if(data.user_id){
-  //   alert("User ID is "+ data.user_id);
-  // }
-
-  //   if(keys[1]==="username"){
-  //     alert("Username is "+ data.username);
-  //   }else{
-  //     alert("Username not found");
-  //   }
-  });
-
-
+//http://icircles.app/api/profile/usermicrosite/jewel
