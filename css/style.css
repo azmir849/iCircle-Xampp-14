@@ -1121,6 +1121,7 @@ p {
   box-shadow: 1px 1.2px 4px 1px #9a99994d;
   margin-top: 20px;
   border-radius: 8px;
+  display: flex;
 }
 
 .portfolio .portfolio_wrapper .tab-content .tab-pane .portItem img {
